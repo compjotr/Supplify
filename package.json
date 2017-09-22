@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
+    "classnames": "^2.2.5",
     "meteor-node-stubs": "~0.2.4",
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.6.0",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-time": "^4.3.0"
   }
 }
