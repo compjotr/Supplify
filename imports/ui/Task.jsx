@@ -7,22 +7,27 @@ export default class Task extends Component {
     // Set the checked property to the opposite of its current value
     Meteor.call('tasks.setChecked', this.props.task._id, !this.props.task.checked);
   }
-  resetChecked() {
-
+  resetChecked(){
+    Meteor.call('tasks.resetChecked')
   }
   deleteThisTask() {
     Meteor.call('tasks.remove', this.props.task._id);
+
+  }
+  tryToReset(){
+    Meteor.call('tasks.tryToReset')
   }
 
   render() {
     // Give tasks a different className when they are checked off,
     // so that we can style them nicely in CSS
 
-
-
     const taskClassName = this.props.task.checked ? 'checked' : '';
 
+    Meteor.call('tasks.tryToReset');
+
     return (
+
       <li className={taskClassName}>
         <button className="delete" onClick={this.deleteThisTask.bind(this)}>
           &times;
@@ -41,6 +46,7 @@ export default class Task extends Component {
         </span>
       </li>
     );
+
   }
 }
 

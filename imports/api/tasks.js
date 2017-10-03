@@ -29,11 +29,15 @@ Meteor.methods({
     Tasks.insert({
       text,
       createdAt: new Date(),
+      timeStamp: new Date().getDate(),
       owner: Meteor.userId(),
       username: Meteor.user().username,
     });
 
+
+
   },
+
   'tasks.remove'(taskId) {
     check(taskId, String);
 
@@ -49,6 +53,20 @@ Meteor.methods({
     check(setChecked, Boolean);
 
     Tasks.update(taskId, { $set: { checked: setChecked } });
+  },
+  
+  'tasks.tryToReset'(){
+    var cursor = Tasks.find().fetch();
+    date = new Date();
+    if(parseInt(cursor[0].timeStamp) != parseInt(date.getDate())){
+      cursor[0].timeStamp = date.getDate();
+      for(x=0; x<cursor.length; x++){
+        if(cursor[x].checked){
+          Meteor.call('tasks.setChecked',cursor[x]._id, !cursor[x].checked);
+        }
+      }
+    }
+
   },
   'tasks.setPrivate'(taskId, setToPrivate) {
    check(taskId, String);

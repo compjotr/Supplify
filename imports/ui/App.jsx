@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-
 import { Tasks } from '../api/tasks.js';
-
 import Task from './Task.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
@@ -25,7 +23,7 @@ class App extends Component {
     const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
     Meteor.call('tasks.insert', text);
-
+    
     // Clear form
     ReactDOM.findDOMNode(this.refs.textInput).value = '';
   }
@@ -33,13 +31,18 @@ class App extends Component {
   toggleHideCompleted() {
     this.setState({
       hideCompleted: !this.state.hideCompleted,
+
     });
   }
 
+
+
   renderTasks() {
     let filteredTasks = this.props.tasks;
+
     if (this.state.hideCompleted) {
       filteredTasks = filteredTasks.filter(task => !task.checked);
+      Meteor.call()
     }
     return filteredTasks.map((task) => (
       <Task key={task._id} task={task} />
